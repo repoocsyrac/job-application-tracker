@@ -9,6 +9,10 @@ const EditJob = ({ job, onCancel, onSave }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!jobTitle || !companyName) {
+        alert('Please fill out all required fields');
+        return;
+    }
     try {
       await api.put(`/jobs/${job.id}`, {
         jobTitle,
