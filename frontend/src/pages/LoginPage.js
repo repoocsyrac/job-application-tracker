@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Container, Typography } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../firebase';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
