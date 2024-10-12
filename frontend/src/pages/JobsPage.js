@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Container, Typography } from '@mui/material';
+//import AddCircleIcon from '@mui/icons-material/AddCircle';
 import api from '../api/axios';
 import AddJob from '../components/AddJob';
+import { AddCircle as AddCircleIcon } from '@mui/icons-material';
 
 const JobsPage = () => {
   const [jobs, setJobs] = useState([]);
