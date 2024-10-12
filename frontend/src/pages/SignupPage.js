@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Container, Typography } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
 const SignupPage = () => {
@@ -12,7 +13,7 @@ const SignupPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signup(email, password);
+      await createUserWithEmailAndPassword(email, password);
       navigate('/jobs');
     } catch (error) {
       console.error('Sign-up failed:', error.message);
