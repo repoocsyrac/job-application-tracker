@@ -56,4 +56,22 @@ router.put('/:id', verifyToken, createUserIfNotExists, async (req, res) => {
   }
 });
 
+router.delete('/:id', verifyToken, createUserIfNotExists, async (req, res) => {
+  const jobId = req.params.id;
+
+  try {
+    // Check if job belongs to the authenticated user
+    const job = await Job.findOne({ where: { id: jobId, userId: req.dbUser.id } });
+    if (!job) {
+      return res.status(404).json({ message: 'Job not found or not authorized' });
+    }
+
+    // Delete job from the database
+    await job.destroy();
+    res.status(200).json({ message: 'Job deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting job', error });
+  }
+});
+
 module.exports = router;
