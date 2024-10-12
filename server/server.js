@@ -1,35 +1,38 @@
 
-const sequelize = require('./config/database');
-const User = require('./models/User');
-const Job = require('./models/Job');
 const express = require('express');
-const jobRoutes = require('./routes/jobs');
 const cors = require('cors');
-require('dotenv').config();
+const { Sequelize } = require('sequelize');
+require('dotenv').config(); // Load environment variables
+const sequelize = require('./config/database'); // Import the Sequelize instance
+const Job = require('./models/Job'); // Import the Job model
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// middleware
-app.use(cors({
-  origin: 'http://localhost:3000', // TODO: replace with env var
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true
-}));
+// Middleware
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(express.json()); // Parse JSON bodies for incoming requests
 
-app.use(express.json());
-app.use('/api/jobs', jobRoutes);
+// Function to start the server
+async function startServer() {
+  try {
+    // Connect to the database
+    await sequelize.authenticate();
+    console.log('Database connected');
 
- // Synchronize database
-sequelize.sync()
-.then(() => {
-  console.log('Database synchronized');
-})
-.catch((error) => {
-  console.error('Unable to synchronize database:', error);
-});
+    // Sync models with the database
+    await sequelize.sync();
+    console.log('Database synchronized');
 
-// Routes
+    // Start the server
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+  }
+}
+
 // Routes
 
 // CREATE: Add a new job
@@ -103,7 +106,4 @@ app.delete('/api/jobs/:id', async (req, res) => {
   }
 });
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+startServer();
