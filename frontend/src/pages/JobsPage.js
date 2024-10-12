@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Container, Typography, Link } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Container, Typography, Link, Button } from '@mui/material';
+import { Edit, Delete } from '@mui/icons-material';
 //import AddCircleIcon from '@mui/icons-material/AddCircle';
 import api from '../api/axios';
 import AddJob from '../components/AddJob';
 import { AddCircle as AddCircleIcon } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import axios from 'axios'; 
 
 const JobsPage = () => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
   const [showAddJob, setShowAddJob] = useState(false);
 
@@ -21,11 +27,33 @@ const JobsPage = () => {
     fetchJobs();
   }, []);
 
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+  };
+
+  const handleEdit = (jobId) => {
+    // TODO: Handle job editiing
+    console.log(`Edit job with ID: ${jobId}`);
+  };
+
+  const handleDelete = async (jobId) => {
+    try {
+      await axios.delete(`/api/jobs/${jobId}`);
+      setJobs(jobs.filter((job) => job.id !== jobId));
+    } catch (error) {
+      console.error("Error deleting job:", error);
+    }
+  };
+
   return (
     <Container maxWidth="lg">
       <Typography variant="h4" align="center" mt={5}>
         Your Job Applications
       </Typography>
+      <Button variant="contained" color="secondary" onClick={handleLogout}>
+        Logout
+      </Button>
       <IconButton color="primary" onClick={() => setShowAddJob(!showAddJob)}>
         <AddCircleIcon fontSize="large" />
       </IconButton>
@@ -55,7 +83,12 @@ const JobsPage = () => {
                 </TableCell>
                 <TableCell>{job.status}</TableCell>
                 <TableCell>
-                  {/* Edit and Delete Buttons Here */}
+                <IconButton color="primary" onClick={() => handleEdit(job.id)}>
+                    <Edit />
+                  </IconButton>
+                  <IconButton color="secondary" onClick={() => handleDelete(job.id)}>
+                    <Delete />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
