@@ -9,6 +9,10 @@ const AddJob = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!jobTitle || !companyName) {
+      alert('Please fill out all required fields');
+      return;
+    }
     try {
       await api.post('/jobs/add', {
         jobTitle,
