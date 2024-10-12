@@ -3,7 +3,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-import dotenv from 'dotenv';
 
 // TODO: Add SDKs for Firebase products that you want to use
 
@@ -14,7 +13,6 @@ import dotenv from 'dotenv';
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
-dotenv.config();
 
 const firebaseConfig = {
 

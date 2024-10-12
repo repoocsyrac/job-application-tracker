@@ -1,4 +1,4 @@
-require('dotenv').config();
+
 const sequelize = require('./config/database');
 const User = require('./models/User');
 const Job = require('./models/Job');

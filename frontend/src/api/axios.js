@@ -2,7 +2,7 @@ import axios from 'axios';
 import { auth } from '../firebase';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api', // TO_DO: use env variable
+  baseURL: process.env.REACT_APP_BASE_URL, // TO_DO: use env variable
 });
 
 api.interceptors.request.use(async (config) => {
