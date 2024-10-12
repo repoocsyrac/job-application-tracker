@@ -7,7 +7,6 @@ import AddJob from '../components/AddJob';
 import { AddCircle as AddCircleIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios'; 
 
 const JobsPage = () => {
   const { logout } = useAuth();
@@ -18,7 +17,7 @@ const JobsPage = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await api.get('/api/jobs');
+        const response = await api.get('/jobs');
         setJobs(response.data);
       } catch (error) {
         console.error('Error fetching jobs:', error);
@@ -39,7 +38,7 @@ const JobsPage = () => {
 
   const handleDelete = async (jobId) => {
     try {
-      await axios.delete(`/api/jobs/${jobId}`);
+      await api.delete(`/jobs/${jobId}`);
       setJobs(jobs.filter((job) => job.id !== jobId));
     } catch (error) {
       console.error("Error deleting job:", error);
