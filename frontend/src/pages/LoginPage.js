@@ -12,7 +12,7 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await login(email, password);
+      await login(auth, email, password);
       navigate('/jobs');
     } catch (error) {
       console.error('Login failed:', error.message);
