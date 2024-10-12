@@ -13,7 +13,6 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Email:", email, "Password:", password); // Debugging log
     
     if (typeof email !== 'string' || typeof password !== 'string') {
       setErrorMessage('Invalid email or password format');
