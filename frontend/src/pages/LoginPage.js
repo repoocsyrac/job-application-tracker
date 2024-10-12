@@ -1,22 +1,31 @@
 import React, { useState } from 'react';
-import { TextField, Button, Container, Typography } from '@mui/material';
+import { TextField, Button, Container, Typography, Alert } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useAuth();
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log("Email:", email, "Password:", password); // Debugging log
+    
+    if (typeof email !== 'string' || typeof password !== 'string') {
+      setErrorMessage('Invalid email or password format');
+      return;
+    }
+
     try {
-      await login(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       navigate('/jobs');
     } catch (error) {
       console.error('Login failed:', error.message);
+      setErrorMessage(error.message);
     }
   };
 
