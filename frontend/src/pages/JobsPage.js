@@ -18,7 +18,7 @@ const JobsPage = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await api.get('/jobs');
+        const response = await api.get('/api/jobs');
         setJobs(response.data);
       } catch (error) {
         console.error('Error fetching jobs:', error);
