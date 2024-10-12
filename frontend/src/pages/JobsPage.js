@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Container, Typography } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Container, Typography, Link } from '@mui/material';
 //import AddCircleIcon from '@mui/icons-material/AddCircle';
 import api from '../api/axios';
 import AddJob from '../components/AddJob';
@@ -38,6 +38,7 @@ const JobsPage = () => {
               <TableCell>Company</TableCell>
               <TableCell>Location</TableCell>
               <TableCell>Status</TableCell>
+              <TableCell>Link</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -47,6 +48,11 @@ const JobsPage = () => {
                 <TableCell>{job.jobTitle}</TableCell>
                 <TableCell>{job.companyName}</TableCell>
                 <TableCell>{job.location}</TableCell>
+                <TableCell>
+                  <Link href={job.website} target="_blank" rel="noopener">
+                    {job.website}
+                  </Link>
+                </TableCell>
                 <TableCell>{job.status}</TableCell>
                 <TableCell>
                   {/* Edit and Delete Buttons Here */}
