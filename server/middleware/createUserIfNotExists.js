@@ -1,4 +1,4 @@
-const User = require('../models/User');
+/*const User = require('../models/User');
 
 const createUserIfNotExists = async (req, res, next) => {
   const firebaseUid = req.user.uid;
@@ -21,4 +21,16 @@ const createUserIfNotExists = async (req, res, next) => {
   }
 };
 
-module.exports = createUserIfNotExists;
+module.exports = createUserIfNotExists;*/
+
+const attachFirebaseUid = (req, res, next) => {
+  try {
+    // Attach Firebase UID to the request object
+    req.firebaseUid = req.user.uid;
+    next();
+  } catch (error) {
+    res.status(500).json({ message: 'Error attaching Firebase UID', error });
+  }
+};
+
+module.exports = attachFirebaseUid;

@@ -7,17 +7,17 @@ const Job = require('../models/Job');
 const router = express.Router();
 
 router.post('/add', verifyToken, createUserIfNotExists, async (req, res) => {
-  const { companyName, jobTitle, applicationLink, location, closingDate, status } = req.body;
+  const { companyName, jobTitle, applicationLink, location, closingDate, status, firebaseUid } = req.body;
 
   try {
     const job = await Job.create({
-      userId: req.dbUser.id,
       companyName,
       jobTitle,
       applicationLink,
       location,
       closingDate,
-      status
+      status,
+      firebaseUid: req.firebaseUid
     });
 
     res.status(201).json({ message: 'Job added successfully', job });
@@ -29,7 +29,7 @@ router.post('/add', verifyToken, createUserIfNotExists, async (req, res) => {
 router.get('/', verifyToken, createUserIfNotExists, async (req, res) => {
   try {
     const jobs = await Job.findAll({
-      where: { userId: req.dbUser.id }
+      where: { firebaseUid: req.firebaseUid }
     });
     res.status(200).json(jobs);
   } catch (error) {
@@ -43,7 +43,7 @@ router.put('/:id', verifyToken, createUserIfNotExists, async (req, res) => {
 
   try {
     // Check if job belongs to the authenticated user
-    const job = await Job.findOne({ where: { id: jobId, userId: req.dbUser.id } });
+    const job = await Job.findOne({ where: { id: jobId, firebaseUid: req.firebaseUid } });
     if (!job) {
       return res.status(404).json({ message: 'Job not found or not authorized' });
     }
@@ -61,7 +61,7 @@ router.delete('/:id', verifyToken, createUserIfNotExists, async (req, res) => {
 
   try {
     // Check if job belongs to the authenticated user
-    const job = await Job.findOne({ where: { id: jobId, userId: req.dbUser.id } });
+    const job = await Job.findOne({ where: { id: jobId, firebaseUid: req.firebaseUid } });
     if (!job) {
       return res.status(404).json({ message: 'Job not found or not authorized' });
     }

@@ -1,15 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const User = require('./User');
 
 const Job = sequelize.define('Job', {
-  userId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: User,
-      key: 'id'
-    }
-  },
   companyName: {
     type: DataTypes.STRING,
     allowNull: false
@@ -33,10 +25,11 @@ const Job = sequelize.define('Job', {
   status: {
     type: DataTypes.STRING,
     allowNull: true
+  },
+  firebaseUid: {
+    type: DataTypes.STRING,
+    allowNull: false
   }
 });
-
-User.hasMany(Job, { foreignKey: 'userId' });
-Job.belongsTo(User, { foreignKey: 'userId' });
 
 module.exports = Job;
