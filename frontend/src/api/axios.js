@@ -10,6 +10,8 @@ api.interceptors.request.use(async (config) => {
   if (user) {
     const token = await user.getIdToken();
     config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    console.warn("No authenticated user found.");
   }
   return config;
 });
