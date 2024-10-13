@@ -7,6 +7,10 @@ const AddJob = () => {
   const [location, setLocation] = useState('');
   const [status, setStatus] = useState('To Apply');
 
+  const [applicationLink, setApplicationLink] = useState('');
+  const [closingDate, setClosingDate] = useState('');
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!jobTitle || !companyName) {
@@ -15,10 +19,13 @@ const AddJob = () => {
     }
     try {
       await api.post('/api/jobs/', {
-        jobTitle,
         companyName,
+        jobTitle,
+        applicationLink,
         location,
-        status
+        closingDate,
+        status,
+        //firebaseUid
       });
       window.location.reload();
     } catch (error) {
@@ -30,13 +37,6 @@ const AddJob = () => {
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Job Title"
-        value={jobTitle}
-        onChange={(e) => setJobTitle(e.target.value)}
-        required
-      />
-      <input
-        type="text"
         placeholder="Company Name"
         value={companyName}
         onChange={(e) => setCompanyName(e.target.value)}
@@ -44,9 +44,28 @@ const AddJob = () => {
       />
       <input
         type="text"
+        placeholder="Job Title"
+        value={jobTitle}
+        onChange={(e) => setJobTitle(e.target.value)}
+        required
+      />
+      <input
+        type="text"
+        placeholder="Website"
+        value={applicationLink}
+        onChange={(e) => setApplicationLink(e.target.value)}
+      />
+      <input
+        type="text"
         placeholder="Location"
         value={location}
         onChange={(e) => setLocation(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Closing Date"
+        value={location}
+        onChange={(e) => setClosingDate(e.target.value)}
       />
       <select value={status} onChange={(e) => setStatus(e.target.value)}>
         <option value="To Apply">To Apply</option>
