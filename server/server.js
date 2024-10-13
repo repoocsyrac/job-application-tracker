@@ -5,6 +5,7 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config(); // Load environment variables
 const sequelize = require('./config/database'); // Import the Sequelize instance
 const Job = require('./models/Job'); // Import the Job model
+const jobRoutes = require('./routes/jobs');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,6 +13,8 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(express.json()); // Parse JSON bodies for incoming requests
+
+app.use('/api/jobs', jobRoutes);
 
 // Function to start the server
 async function startServer() {
@@ -33,6 +36,7 @@ async function startServer() {
   }
 }
 
+/*
 // Routes
 
 // CREATE: Add a new job
@@ -105,5 +109,5 @@ app.delete('/api/jobs/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to delete job' });
   }
 });
-
+*/
 startServer();
