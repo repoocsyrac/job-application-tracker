@@ -14,7 +14,7 @@ const AddJob = () => {
       return;
     }
     try {
-      await api.post('/jobs/add', {
+      await api.post('/api/jobs/', {
         jobTitle,
         companyName,
         location,
