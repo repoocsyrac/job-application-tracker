@@ -24,12 +24,11 @@ const AddJob = () => {
         applicationLink,
         location,
         closingDate,
-        status,
-        //firebaseUid
+        status
       });
       window.location.reload();
     } catch (error) {
-      console.error('Error adding job:', error);
+      console.error('Error adding job:', error.response ? error.response.data : error.message)
     }
   };
 
@@ -64,7 +63,7 @@ const AddJob = () => {
       <input
         type="text"
         placeholder="Closing Date"
-        value={location}
+        value={closingDate}
         onChange={(e) => setClosingDate(e.target.value)}
       />
       <select value={status} onChange={(e) => setStatus(e.target.value)}>
