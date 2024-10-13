@@ -1,13 +1,13 @@
 
 const express = require('express');
 const verifyToken = require('../middleware/auth');
-const createUserIfNotExists = require('../middleware/createUserIfNotExists');
+const attachFirebaseUid = require('../middleware/attachFirebaseUid');
 const Job = require('../models/Job');
 
 const router = express.Router();
 
-router.post('/add', verifyToken, createUserIfNotExists, async (req, res) => {
-  const { companyName, jobTitle, applicationLink, location, closingDate, status, firebaseUid } = req.body;
+router.post('/add', verifyToken, attachFirebaseUid, async (req, res) => {
+  const { companyName, jobTitle, applicationLink, location, closingDate, status } = req.body;
 
   try {
     const job = await Job.create({
@@ -26,7 +26,7 @@ router.post('/add', verifyToken, createUserIfNotExists, async (req, res) => {
   }
 });
 
-router.get('/', verifyToken, createUserIfNotExists, async (req, res) => {
+router.get('/', verifyToken, attachFirebaseUid, async (req, res) => {
   try {
     const jobs = await Job.findAll({
       where: { firebaseUid: req.firebaseUid }
@@ -37,7 +37,7 @@ router.get('/', verifyToken, createUserIfNotExists, async (req, res) => {
   }
 });
 
-router.put('/:id', verifyToken, createUserIfNotExists, async (req, res) => {
+router.put('/:id', verifyToken, attachFirebaseUid, async (req, res) => {
   const jobId = req.params.id;
   const { companyName, jobTitle, applicationLink, location, closingDate, status } = req.body;
 
@@ -56,7 +56,7 @@ router.put('/:id', verifyToken, createUserIfNotExists, async (req, res) => {
   }
 });
 
-router.delete('/:id', verifyToken, createUserIfNotExists, async (req, res) => {
+router.delete('/:id', verifyToken, attachFirebaseUid, async (req, res) => {
   const jobId = req.params.id;
 
   try {
