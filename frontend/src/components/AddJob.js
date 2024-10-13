@@ -61,7 +61,7 @@ const AddJob = () => {
         onChange={(e) => setLocation(e.target.value)}
       />
       <input
-        type="text"
+        type="date"
         placeholder="Closing Date"
         value={closingDate}
         onChange={(e) => setClosingDate(e.target.value)}
