@@ -61,25 +61,27 @@ const JobsPage = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Job Title</TableCell>
               <TableCell>Company</TableCell>
+              <TableCell>Job Role</TableCell>
+              <TableCell>Website</TableCell>
               <TableCell>Location</TableCell>
+              <TableCell>Closing Date</TableCell>
               <TableCell>Status</TableCell>
-              <TableCell>Link</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {jobs.map((job) => (
               <TableRow key={job.id}>
-                <TableCell>{job.jobTitle}</TableCell>
                 <TableCell>{job.companyName}</TableCell>
-                <TableCell>{job.location}</TableCell>
+                <TableCell>{job.jobTitle}</TableCell>
                 <TableCell>
-                  <Link href={job.website} target="_blank" rel="noopener">
-                    {job.website}
+                  <Link href={job.applicationLink} target="_blank" rel="noopener">
+                    {job.applicationLink}
                   </Link>
                 </TableCell>
+                <TableCell>{job.location}</TableCell>
+                <TableCell>{job.closingDate}</TableCell>
                 <TableCell>{job.status}</TableCell>
                 <TableCell>
                 <IconButton color="primary" onClick={() => handleEdit(job.id)}>
